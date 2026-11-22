@@ -1,0 +1,39 @@
+/* Shared feedback uses the app's indigo, surface, ink, muted and status-color tokens. */
+.app-toast { position: fixed; z-index: 1100; inset-inline-start: var(--qd-space-3); inset-block-end: var(--qd-space-3); display: flex; align-items: center; gap: var(--qd-space-1); max-width: min(460px, calc(100vw - var(--qd-space-3) * 2)); padding: var(--qd-space-1-5) var(--qd-space-2); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-inline-start: 4px solid var(--purple); border-radius: 12px; box-shadow: var(--qd-shadow); font-size: 14px; line-height: 1.6; animation: qd-dialog-in var(--qd-motion-in) both; }
+.app-toast-success { border-inline-start-color: var(--green); }
+.app-toast-error { border-inline-start-color: var(--red); }
+.field-error { display: flex; align-items: center; gap: var(--qd-space-half); color: var(--red); font-size: 13px; line-height: 1.6; }
+.app-toast > svg { flex: 0 0 auto; color: var(--purple); }
+.app-toast-success > svg { color: var(--green); }
+.app-toast-error > svg { color: var(--red); }
+.app-toast button { display: grid; place-items: center; flex: 0 0 auto; width: 36px; height: 36px; margin-inline-start: auto; color: var(--qd-text-muted); background: transparent; border: 1px solid transparent; border-radius: 8px; }
+.app-toast button:hover { color: var(--purple); background: color-mix(in srgb, var(--purple) 7%, var(--surface)); }
+
+/* Confirmation and preview dialogs share the question editor's surface and focus treatment. */
+.app-dialog-layer { position: fixed; inset: 0; z-index: 1090; display: grid; place-items: center; padding: var(--qd-space-3); background: var(--qd-overlay); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); animation: qd-fade-in var(--qd-motion-in) both; }
+.app-dialog-card { position: relative; width: min(480px, 100%); max-height: min(88dvh, 760px); display: flex; flex-direction: column; overflow: auto; padding: var(--qd-space-3); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: var(--qd-radius); box-shadow: var(--qd-shadow); animation: qd-dialog-in var(--qd-motion-in) both; }
+.app-dialog-close { position: absolute; inset-block-start: var(--qd-space-2); inset-inline-end: var(--qd-space-2); display: grid; place-items: center; width: 40px; height: 40px; color: var(--qd-text-muted); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.app-dialog-close:hover { color: var(--purple); background: color-mix(in srgb, var(--purple) 6%, var(--surface)); }
+.app-dialog-card :focus-visible, .app-toast :focus-visible { outline: var(--qd-focus-width) solid color-mix(in srgb, var(--purple) 38%, transparent); outline-offset: var(--qd-focus-offset); }
+.app-dialog-icon { display: grid; place-items: center; width: 48px; height: 48px; margin-block-end: var(--qd-space-2); color: var(--red); background: color-mix(in srgb, var(--red) 9%, var(--surface)); border-radius: 14px; }
+.app-info-icon { color: var(--purple); background: color-mix(in srgb, var(--purple) 8%, var(--surface)); }
+.app-dialog-card h2 { margin: 0 0 var(--qd-space-1); padding-inline-end: var(--qd-space-4); font-size: 20px; line-height: 1.5; }
+.app-dialog-card > p { margin: 0 0 var(--qd-space-2); color: var(--qd-text-muted); font-size: 15px; line-height: 1.8; }
+.app-dialog-progress { display: flex; align-items: center; gap: var(--qd-space-half); margin-block-end: var(--qd-space-2); color: var(--qd-text-muted); font-size: 13px; }
+.app-dialog-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: var(--qd-space-1); margin-block-start: var(--qd-space-1); }
+.app-dialog-actions .button { min-height: 44px; font-size: 14px; }
+.app-dialog-danger { color: var(--qd-on-primary); background: var(--red); border: 1px solid var(--red); }
+.app-dialog-danger:hover { filter: brightness(.94); }
+.app-dialog-spinner { animation: qd-spin 850ms linear infinite; }
+.app-message-card { width: min(760px, 100%); }
+.app-message-body { max-height: 52dvh; overflow: auto; margin: 0; padding: var(--qd-space-2); color: var(--ink); background: color-mix(in srgb, var(--purple) 4%, var(--surface)); border: 1px solid var(--line); border-radius: 10px; direction: rtl; text-align: start; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; font-size: 14px; line-height: 1.8; }
+
+@media (max-width: 600px) {
+  .app-toast { inset-inline: var(--qd-space-2); inset-block-end: calc(var(--qd-space-2) + env(safe-area-inset-bottom)); max-width: none; }
+  .app-dialog-layer { align-items: end; padding: 0; }
+  .app-dialog-card { width: 100%; max-height: 90dvh; padding: var(--qd-space-2); border-radius: var(--qd-radius) var(--qd-radius) 0 0; padding-block-end: calc(var(--qd-space-2) + env(safe-area-inset-bottom)); }
+  .app-dialog-card h2 { font-size: 18px; }
+  .app-dialog-actions > .button { flex: 1 1 auto; }
+}
+
+@media (prefers-reduced-motion: reduce) { .app-toast, .app-dialog-layer, .app-dialog-card, .app-dialog-spinner { animation-duration: 1ms; transition-duration: 1ms; } }
