@@ -1,0 +1,157 @@
+/* These component tokens reuse the app's indigo, ink, muted, surface, line, green and red palette. */
+:root {
+  --qd-space-1: 8px;
+  --qd-space-half: 4px;
+  --qd-space-quarter: 2px;
+  --qd-space-1-5: 12px;
+  --qd-space-2: 16px;
+  --qd-space-3: 24px;
+  --qd-space-4: 32px;
+  --qd-width: 680px;
+  --qd-radius: 16px;
+  --qd-on-primary: #fff;
+  --qd-text-muted: color-mix(in srgb, var(--muted) 88%, var(--ink));
+  --qd-shadow: 0 20px 56px color-mix(in srgb, var(--ink) 18%, transparent);
+  --qd-overlay: color-mix(in srgb, var(--ink) 58%, transparent);
+  --qd-motion-in: 250ms ease-out;
+  --qd-motion-out: 160ms ease-in;
+  --qd-motion-distance: 8px;
+  --qd-focus-width: 3px;
+  --qd-focus-offset: 2px;
+  --qd-shadow-selected: 0 2px 6px color-mix(in srgb, var(--purple) 25%, transparent);
+}
+
+/* A blurred, dimmed scrim keeps the focused task visually distinct from the interview. */
+.question-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: var(--qd-space-3);
+  background: var(--qd-overlay);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  animation: qd-fade-in var(--qd-motion-in) both;
+}
+
+/* The dialog uses the same white surface, indigo actions and soft elevation as existing panels. */
+.question-dialog {
+  position: relative;
+  width: min(var(--qd-width), 100%);
+  max-height: min(90dvh, 900px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--qd-radius);
+  box-shadow: var(--qd-shadow);
+  animation: qd-dialog-in var(--qd-motion-in) both;
+}
+.question-dialog-backdrop.is-closing { animation: qd-fade-out var(--qd-motion-out) both; }
+.question-dialog-backdrop.is-closing .question-dialog { animation: qd-dialog-out var(--qd-motion-out) both; }
+
+.question-dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--qd-space-2);
+  padding: var(--qd-space-3) var(--qd-space-3) var(--qd-space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.question-dialog-kicker { color: var(--purple); font-size: 12px; font-weight: 700; }
+.question-dialog-header h2 { margin: var(--qd-space-half) 0; color: var(--ink); font-size: 22px; line-height: 1.4; }
+.question-dialog-header p { margin: 0; color: var(--qd-text-muted); font-size: 14px; line-height: 1.7; }
+.question-dialog-close { display: grid; place-items: center; flex: 0 0 auto; width: 40px; height: 40px; color: var(--qd-text-muted); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.question-dialog-close:hover { color: var(--purple); background: color-mix(in srgb, var(--purple) 6%, var(--surface)); }
+
+/* Scrolling stays inside the form while the action row remains visible. */
+.question-dialog form { min-height: 0; display: flex; flex-direction: column; }
+.question-dialog-body { min-height: 0; overflow: auto; padding: var(--qd-space-2) var(--qd-space-3); }
+.qd-field { min-width: 0; display: flex; flex-direction: column; gap: var(--qd-space-1); margin-block-end: var(--qd-space-2); }
+.qd-label { display: flex; align-items: baseline; gap: var(--qd-space-1); color: var(--ink); font-size: 14px; font-weight: 700; }
+.qd-label b { color: var(--red); }
+.qd-label small { color: var(--qd-text-muted); font-size: 12px; font-weight: 400; }
+.qd-field input, .qd-field textarea, .qd-field select {
+  width: 100%; min-height: 48px; padding: var(--qd-space-1-5); color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 10px; outline: none; font: inherit; font-size: 16px; line-height: 1.6;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+.qd-field textarea { min-height: 72px; resize: vertical; }
+.qd-field input::placeholder, .qd-field textarea::placeholder { color: var(--qd-text-muted); opacity: 1; }
+.qd-field input:hover, .qd-field textarea:hover, .qd-field select:hover { border-color: color-mix(in srgb, var(--purple) 48%, var(--line)); }
+.qd-field input:focus-visible, .qd-field textarea:focus-visible, .qd-field select:focus-visible,
+.question-dialog button:focus-visible, .qd-checkbox input:focus-visible {
+  outline: var(--qd-focus-width) solid color-mix(in srgb, var(--purple) 38%, transparent); outline-offset: var(--qd-focus-offset); border-color: var(--purple);
+}
+.qd-field [aria-invalid="true"] { border-color: var(--red); }
+.qd-count { align-self: flex-start; margin-block-start: calc(-1 * var(--qd-space-half)); color: var(--qd-text-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+/* Three existing answer families are exposed as a compact, keyboard-operable segmented selector. */
+.qd-fieldset { min-width: 0; margin: 0 0 var(--qd-space-2); padding: 0; border: 0; }
+.qd-fieldset legend { margin-block-end: var(--qd-space-1); }
+.qd-segmented { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--qd-space-half); padding: var(--qd-space-half); background: color-mix(in srgb, var(--purple) 6%, var(--surface)); border: 1px solid var(--line); border-radius: 12px; }
+.qd-segmented button { min-height: 44px; padding: var(--qd-space-1); color: var(--qd-text-muted); background: transparent; border: 0; border-radius: 9px; font: inherit; font-size: 14px; font-weight: 600; }
+.qd-segmented button:hover { color: var(--purple-dark); background: color-mix(in srgb, var(--purple) 8%, var(--surface)); }
+.qd-segmented button.is-selected { color: var(--qd-on-primary); background: var(--purple); box-shadow: var(--qd-shadow-selected); }
+.qd-choice-fields { display: grid; grid-template-columns: minmax(150px, .8fr) minmax(0, 1.2fr); gap: var(--qd-space-2); }
+.qd-checkbox { display: flex; align-items: flex-start; gap: var(--qd-space-1); padding: var(--qd-space-2); background: color-mix(in srgb, var(--purple) 5%, var(--surface)); border: 1px solid var(--line); border-radius: 10px; cursor: pointer; }
+.qd-checkbox input { width: 18px; height: 18px; flex: 0 0 auto; margin-block-start: var(--qd-space-quarter); accent-color: var(--purple); }
+.qd-checkbox b, .qd-checkbox small { display: block; }
+.qd-checkbox b { color: var(--ink); font-size: 14px; }
+.qd-checkbox small { margin-block-start: var(--qd-space-quarter); color: var(--qd-text-muted); font-size: 12px; }
+
+/* Errors and confirmations remain in the dialog so validation never triggers a browser prompt. */
+.qd-error, .qd-success { display: flex; align-items: flex-start; gap: var(--qd-space-1); margin: 0; font-size: 13px; line-height: 1.6; }
+.qd-error { color: var(--red); }
+.qd-form-error, .qd-success { margin-block-start: var(--qd-space-2); }
+.qd-success { color: var(--green); }
+/* A short-lived status toast confirms saves without interrupting keyboard flow. */
+.qd-toast { position: fixed; inset-inline-start: var(--qd-space-3); inset-block-end: var(--qd-space-3); z-index: 1001; display: flex; align-items: center; gap: var(--qd-space-1); max-width: min(420px, calc(100vw - var(--qd-space-3) * 2)); padding: var(--qd-space-1-5) var(--qd-space-2); color: var(--green); background: var(--surface); border: 1px solid color-mix(in srgb, var(--green) 35%, var(--line)); border-radius: 12px; box-shadow: var(--qd-shadow); font-size: 14px; animation: qd-dialog-in var(--qd-motion-in) both; }
+.question-dialog-footer { display: flex; align-items: center; justify-content: space-between; gap: var(--qd-space-2); padding: var(--qd-space-2) var(--qd-space-3); border-top: 1px solid var(--line); background: var(--surface); }
+.qd-save-actions { display: flex; align-items: center; gap: var(--qd-space-1); }
+.question-dialog-footer .button { min-height: 44px; font-size: 14px; }
+.qd-save { min-width: 142px; }
+.qd-save:disabled, .qd-add-another:disabled { cursor: not-allowed; opacity: .55; }
+.qd-cancel { margin-inline-end: auto; }
+.qd-spinner { animation: qd-spin 850ms linear infinite; }
+.qd-discard { color: var(--qd-on-primary); background: var(--red); border: 1px solid var(--red); }
+.qd-discard:hover { filter: brightness(.94); }
+.qd-confirm-layer { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; padding: var(--qd-space-2); background: color-mix(in srgb, var(--ink) 48%, transparent); }
+.qd-delete-layer { position: fixed; z-index: 1002; }
+.qd-confirm { width: min(420px, 100%); padding: var(--qd-space-3); background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--qd-shadow); }
+.qd-confirm h3 { margin: 0 0 var(--qd-space-1); font-size: 18px; }
+.qd-confirm p { margin: 0 0 var(--qd-space-2); color: var(--qd-text-muted); font-size: 14px; line-height: 1.7; }
+.qd-confirm > div { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: var(--qd-space-1); }
+
+/* The empty state keeps the established primary action and gives it a little more context. */
+.small-empty { min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--qd-space-1); }
+.small-empty .empty-icon { width: 52px; height: 52px; margin: 0 0 var(--qd-space-1); }
+.small-empty h3 { font-size: 16px; }
+.small-empty p { max-width: 390px; margin: 0 0 var(--qd-space-1); color: var(--qd-text-muted); font-size: 14px; line-height: 1.7; }
+
+/* The mobile layout becomes a bottom sheet while tablet and desktop remain centered. */
+@media (max-width: 600px) {
+  .question-dialog-backdrop { align-items: end; padding: 0; }
+  .question-dialog { width: 100%; max-height: 94dvh; border-radius: var(--qd-radius) var(--qd-radius) 0 0; padding-block-end: env(safe-area-inset-bottom); }
+  .question-dialog-header { padding: var(--qd-space-2); }
+  .question-dialog-header h2 { font-size: 20px; }
+  .question-dialog-body { padding: var(--qd-space-2); }
+  .question-dialog-footer { flex-wrap: wrap; padding: var(--qd-space-2); }
+  .qd-save-actions { flex: 1 1 100%; }
+  .qd-save-actions .button { flex: 1 1 0; }
+  .qd-cancel { order: 2; width: 100%; }
+  .qd-choice-fields { grid-template-columns: 1fr; gap: 0; }
+  .qd-segmented button { padding-inline: 4px; font-size: 13px; }
+}
+
+@keyframes qd-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes qd-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes qd-dialog-in { from { opacity: 0; transform: translateY(var(--qd-motion-distance)) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes qd-dialog-out { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(var(--qd-motion-distance)) scale(.99); } }
+@keyframes qd-spin { to { transform: rotate(360deg); } }
+/* Motion preferences take precedence over the standard entrance animation. */
+@media (prefers-reduced-motion: reduce) { .question-dialog-backdrop, .question-dialog, .qd-spinner { animation-duration: 1ms; transition-duration: 1ms; } }
