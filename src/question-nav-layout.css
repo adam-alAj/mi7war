@@ -39,7 +39,10 @@
 
   .question-nav > .add-question {
     flex: 0 0 auto;
-    width: calc(100% - 16px);
+    align-self: stretch;
+    width: auto;
+    max-width: calc(100% - 16px);
+    box-sizing: border-box;
     min-height: 44px;
     margin: 0 8px 8px;
   }
