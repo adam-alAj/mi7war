@@ -42,7 +42,7 @@ Speech recognition does not use Whisper or any machine learning model bundled wi
 
 ### Windows
 
-You need Node.js and npm. Node.js 20.19 or later is recommended for the Vite version used by this project.
+You need Node.js and npm. The installed Vite version supports Node.js `^20.19.0` or `>=22.12.0`.
 
 Open PowerShell in the project directory and run:
 
@@ -135,6 +135,25 @@ INTERVIEWS_WEP/
 ```
 
 ## Development and production build
+
+### Deploy from GitHub to Vercel
+
+The project includes a root `vercel.json` for Vite, the `dist` output directory, and a rewrite to `index.html` so BrowserRouter URLs such as `/interview/:id` and `/review/:id` continue to load when opened or refreshed directly. In Vercel, import the GitHub repository and use these project settings (the config also declares the build and output values):
+
+| Setting | Value |
+| --- | --- |
+| Framework preset | Vite |
+| Root directory | `./` |
+| Install command | `npm install` (Vercel default) |
+| Build command | `npm run build` |
+| Output directory | `dist` |
+| Environment variables | None required |
+
+Do not add a Python or transcription backend to the Vercel project. The app has no backend API or required secrets. Vercel serves the built frontend over HTTPS, which allows the browser to request microphone permission. Web Speech API support and its audio processing behavior still depend on the visitor's browser.
+
+Interview data and recordings are stored in IndexedDB for the specific browser and origin. A Vercel deployment uses a different origin from localhost, and its data is not synchronized with local development or with other devices or browsers.
+
+After pushing the repository to GitHub, connect it in Vercel and deploy. Subsequent pushes to the configured production branch trigger deployments.
 
 Run the TypeScript type check:
 
