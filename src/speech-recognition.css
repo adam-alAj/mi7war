@@ -1,0 +1,8 @@
+.speech-live-text{min-height:72px;padding:14px 16px;border:1px solid var(--line,#e8e6ee);border-radius:12px;background:#faf9fc;line-height:1.8;white-space:pre-wrap;color:var(--ink,#24212e)}
+.speech-interim{color:#626b7a;font-style:italic}
+.mic-active{position:relative;color:#a23c4a;animation:mic-pulse 1.2s ease-in-out infinite}
+@keyframes mic-pulse{0%,100%{box-shadow:0 0 0 0 #c8424a35}50%{box-shadow:0 0 0 9px #c8424a00}}
+.inline-warning{padding:12px 14px;border-radius:10px;background:#fff7e8;color:#785400;margin:12px 0;line-height:1.7}
+.speech-card{display:grid;gap:12px}
+.speech-card .settings-fact{display:flex;align-items:center;gap:10px}
+.speech-card .recording-controls{flex-wrap:wrap}
