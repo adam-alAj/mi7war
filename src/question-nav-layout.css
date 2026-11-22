@@ -1,4 +1,90 @@
-/* Let the question list grow with its controls so the add button never overlaps an item. */
+/* Shared spacing keeps each question row and its action aligned in RTL. */
+:root {
+  --qnav-inline-inset: var(--qd-space-1);
+  --qnav-action-height: 44px;
+  --qnav-header-min-height: var(--qnav-action-height);
+  --qnav-action-font-size: 14px;
+  --qnav-title-font-size: 13px;
+  --qnav-focus-width: 2px;
+  --qnav-transition: 150ms ease;
+}
+
+.qnav-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding-inline: var(--qnav-inline-inset);
+}
+
+.qnav-item {
+  padding-inline: var(--qnav-inline-inset);
+}
+
+.qnav-title {
+  font-size: var(--qnav-title-font-size);
+}
+
+.qnav-footer {
+  /* Separating scrolling questions from this footer keeps the add action close at any list length. */
+  position: sticky;
+  inset-block-end: 0;
+  z-index: 1;
+  flex: 0 0 auto;
+  padding: var(--qd-space-1);
+  border-block-start: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: 0 calc(-1 * var(--qd-space-half)) var(--qd-space-1) color-mix(in srgb, var(--ink) 4%, transparent);
+}
+
+.add-question-action {
+  min-height: var(--qnav-action-height);
+  font-size: var(--qnav-action-font-size);
+  font-weight: 600;
+  transition: background-color var(--qnav-transition), box-shadow var(--qnav-transition), transform var(--qnav-transition);
+}
+
+.add-question-panel {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: var(--qd-space-1);
+}
+
+.add-question-action:hover:not(:disabled) {
+  background-color: var(--purple-dark);
+}
+
+.add-question-action:focus-visible {
+  outline: var(--qnav-focus-width) solid var(--purple);
+  outline-offset: var(--qd-focus-offset);
+}
+
+.add-question-action:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.add-question-action:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.add-question-spinner {
+  width: var(--qd-space-2);
+  height: var(--qd-space-2);
+  border: var(--qnav-focus-width) solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  animation: qnav-spin 700ms linear infinite;
+}
+
+@keyframes qnav-spin {
+  to { transform: rotate(1turn); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .add-question-action { transition: none; }
+  .add-question-spinner { animation: none; border-inline-end-color: currentColor; }
+}
+
 @media (max-width: 620px) {
   .question-nav {
     max-height: none;
@@ -6,26 +92,26 @@
   }
 
   .qnav-head {
-    min-height: 44px;
+    min-height: var(--qnav-header-min-height);
     height: auto;
-    padding-block: 8px;
+    padding-block: var(--qd-space-1);
   }
 
   .qnav-list {
+    flex: 0 0 auto;
     min-width: 0;
     min-height: 0;
-    flex: 0 1 auto;
-    padding: 7px;
+    padding-block: var(--qd-space-half);
   }
 
   .qnav-item {
-    flex: 0 0 min(180px, calc(100vw - 64px));
+    flex: 0 0 min(180px, calc(100vw - var(--qd-space-4) * 2));
     width: auto;
     min-width: 0;
     max-width: none;
     min-height: 50px;
     align-items: center;
-    padding: 9px 8px;
+    padding-block: var(--qd-space-1);
   }
 
   .qnav-title {
@@ -34,18 +120,6 @@
   }
 
   .qnav-item > i {
-    margin-top: 0;
-  }
-
-  .question-nav > .add-question {
-    flex: 0 0 auto;
-    align-self: flex-start;
-    width: auto;
-    max-width: calc(100% - 16px);
-    box-sizing: border-box;
-    min-height: 38px;
-    margin: 0 8px 8px;
-    padding: 7px 12px;
-    font-size: 12px;
+    margin-block-start: 0;
   }
 }
