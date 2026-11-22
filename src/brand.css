@@ -1,0 +1,4 @@
+/* Reuse the supplied Mihwar mark in each visible product identity slot. */
+.brand-mark.project-logo { overflow: hidden; background: transparent; box-shadow: none; }
+.project-logo img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+.report-brand .project-logo { flex: 0 0 auto; }

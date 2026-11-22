@@ -1,5 +1,7 @@
 # Mihwar — Interview Management Platform
 
+![Mihwar logo](logo.png)
+
 Mihwar is an Arabic, right-to-left web application for organizing interviews, selecting interview questions, saving answers and audio recordings, and reviewing or printing interview reports. It runs as a local frontend application; it has no application server or transcription backend.
 
 ## Contents

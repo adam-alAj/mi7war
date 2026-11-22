@@ -6,5 +6,6 @@ import './styles.css';
 import './speech-recognition.css';
 import './components/question-dialog.css';
 import './components/app-feedback.css';
+import './brand.css';
 
 createRoot(document.getElementById('root')!).render(<React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>);
