@@ -1,0 +1,24 @@
+/* Keep native language menus readable even when the operating system uses dark mode. */
+.language-select { display: flex; align-items: center; gap: var(--qd-space-1); color: var(--ink); }
+.language-select > span { color: var(--qd-text-muted); font-size: 13px; }
+.language-select select,
+.settings-card select,
+.select {
+  color: var(--ink);
+  background-color: var(--surface);
+  border-color: var(--line);
+  color-scheme: light;
+}
+.language-select select { min-height: 40px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 9px; font-size: 16px; }
+.language-select select:hover,
+.settings-card select:hover,
+.select:hover { border-color: color-mix(in srgb, var(--purple) 48%, var(--line)); }
+.language-select select:focus-visible,
+.settings-card select:focus-visible,
+.select:focus-visible { outline: var(--qd-focus-width) solid color-mix(in srgb, var(--purple) 38%, transparent); outline-offset: var(--qd-focus-offset); border-color: var(--purple); }
+.language-select select option,
+.settings-card select option,
+.select option { color: var(--ink); background-color: var(--surface); font-size: 16px; }
+.language-select select option:checked,
+.settings-card select option:checked,
+.select option:checked { color: var(--ink); background-color: color-mix(in srgb, var(--purple) 14%, var(--surface)); }

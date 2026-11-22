@@ -1,0 +1,46 @@
+/* Let the question list grow with its controls so the add button never overlaps an item. */
+@media (max-width: 620px) {
+  .question-nav {
+    max-height: none;
+    min-width: 0;
+  }
+
+  .qnav-head {
+    min-height: 44px;
+    height: auto;
+    padding-block: 8px;
+  }
+
+  .qnav-list {
+    min-width: 0;
+    min-height: 0;
+    flex: 0 1 auto;
+    padding: 7px;
+  }
+
+  .qnav-item {
+    flex: 0 0 min(180px, calc(100vw - 64px));
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    min-height: 50px;
+    align-items: center;
+    padding: 9px 8px;
+  }
+
+  .qnav-title {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .qnav-item > i {
+    margin-top: 0;
+  }
+
+  .question-nav > .add-question {
+    flex: 0 0 auto;
+    width: calc(100% - 16px);
+    min-height: 44px;
+    margin: 0 8px 8px;
+  }
+}

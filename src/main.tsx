@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './styles.css';
+import './language-select.css';
+import './question-nav-layout.css';
 import './speech-recognition.css';
 import './components/question-dialog.css';
 import './components/app-feedback.css';
